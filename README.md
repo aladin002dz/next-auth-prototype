@@ -1,4 +1,4 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+This is a [Next.js](https://nextjs.org) project for authentication using [Next-Auth V5](https://next-auth.js.org).
 
 🌐 Check out the [Live Demo](https://next-auth-prototype.vercel.app/)
 
