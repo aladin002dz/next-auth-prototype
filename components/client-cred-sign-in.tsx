@@ -1,16 +1,16 @@
 "use client"
-import { useState } from 'react';
+import { useState, ChangeEvent } from 'react';
 import { signIn } from 'next-auth/react';
 
 export default function ClientCredentialsSignIn() {
     const [error, setError] = useState(null);
     const [data, setData] = useState({ email: 'aurore@domain.com', password: '12345678' });
-    const handleChange = (e) => {
+    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         setData(prevData => ({ ...prevData, [name]: value }));
     };
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
         try {
