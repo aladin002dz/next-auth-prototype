@@ -3,7 +3,7 @@ import { useState, ChangeEvent } from 'react';
 import { signIn } from 'next-auth/react';
 
 export default function ClientCredentialsSignIn() {
-    const [error, setError] = useState(null);
+    const [error, setError] = useState<string | null>(null);
     const [data, setData] = useState({ email: 'aurore@domain.com', password: '12345678' });
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -14,14 +14,12 @@ export default function ClientCredentialsSignIn() {
         e.preventDefault();
 
         try {
-            //const result = await signIn('credentials', { /*redirect: false, */...data }, { redirectTo: "/dashboard" });
             const result = await signIn("credentials", {
                 email: data.email,
                 password: data.password,
-                //redirect: false
                 redirectTo: "/dashboard"
-            })
-            if (result.error) {
+            });
+            if (result?.error) {
                 setError(result.error); // Display error message if authentication fails
             } else {
                 setError(null); // Clear any previous errors on successful login
