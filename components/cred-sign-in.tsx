@@ -1,13 +1,15 @@
 import { signIn } from "@/auth"
 
 export function CredentialsSignIn() {
+
     async function handleSignIn(formData: FormData) {
-        'use server'
+        "use server"
         await signIn("credentials", {
             email: formData.get("email"),
             password: formData.get("password"),
             redirectTo: "/dashboard"
         })
+
     }
 
     return (
@@ -23,7 +25,7 @@ export function CredentialsSignIn() {
                         type="email"
                         className="mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2 shadow-sm focus:border-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-400"
                         required
-                        defaultValue="aurore@domain.com"
+                        defaultValue="auroooore@domain.com"
                     />
                 </label>
             </div>

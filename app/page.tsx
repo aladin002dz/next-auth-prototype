@@ -1,5 +1,6 @@
 import { CredentialsSignIn } from "@/components/cred-sign-in";
 import GoogleSignIn from "@/components/google-sign-in";
+import ClientCredentialsSignIn from "@/components/client-cred-sign-in";
 
 export default async function Home() {
   return (
@@ -12,7 +13,15 @@ export default async function Home() {
             <span className="text-gray-500 text-sm">or</span>
             <div className="flex-1 h-px bg-gray-300"></div>
           </div>
+          <h3 className="text-center text-gray-700 text-sm mb-4">Server Side Credentials SignIn</h3>
           <CredentialsSignIn />
+          <div className="w-full flex items-center gap-4 my-6">
+            <div className="flex-1 h-px bg-gray-300"></div>
+            <span className="text-gray-500 text-sm">or</span>
+            <div className="flex-1 h-px bg-gray-300"></div>
+          </div>
+          <h3 className="text-center text-gray-700 text-sm mb-4">Client Side Credentials SignIn</h3>
+          <ClientCredentialsSignIn />
         </div>
       </main>
     </div>
