@@ -1,14 +1,28 @@
 import { signIn } from "@/auth"
+//import { CallbackRouteError } from "next-auth/providers/credentials"
+import { CallbackRouteError } from "@auth/core/errors"
+import { redirect } from "next/navigation"
+//import { useSearchParams } from "next/navigation"
 
-export function CredentialsSignIn() {
-
+export function CredentialsSignIn({ error }: { searchParams: Map<string, string> }) {
     async function handleSignIn(formData: FormData) {
         "use server"
-        await signIn("credentials", {
-            email: formData.get("email"),
-            password: formData.get("password"),
-            redirectTo: "/dashboard"
-        })
+        try {
+            await signIn("credentials", {
+                email: formData.get("email"),
+                password: formData.get("password"),
+                redirect: true,
+                redirectTo: "/dashboard"
+            })
+        } catch (error) {
+            let errorMessage = "An unexpected error occurred"
+            if (error instanceof CallbackRouteError) {
+                errorMessage = error?.cause?.err?.message || "An unexpected error occurred";
+                redirect("/?source=server_credentials&error=" + encodeURIComponent(errorMessage));
+            }
+
+        }
+
 
     }
 
@@ -17,6 +31,11 @@ export function CredentialsSignIn() {
             action={handleSignIn}
             className="w-full space-y-4"
         >
+            {error && error?.source === "server_credentials" && error?.error && (
+                <div className="p-3 text-sm text-red-500 bg-red-50 rounded-lg border border-red-200">
+                    {error?.error}
+                </div>
+            )}
             <div className="space-y-2">
                 <label className="block text-sm font-medium text-gray-700">
                     Email
@@ -25,7 +44,7 @@ export function CredentialsSignIn() {
                         type="email"
                         className="mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2 shadow-sm focus:border-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-400"
                         required
-                        defaultValue="aurore@domain.com"
+                        defaultValue="aurooore@domain.com"
                     />
                 </label>
             </div>

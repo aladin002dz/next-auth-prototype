@@ -1,10 +1,12 @@
 "use client"
 import { useState, ChangeEvent } from 'react';
 import { signIn } from 'next-auth/react';
+import { useRouter } from "next/navigation"
 
 export default function ClientCredentialsSignIn() {
-    const [error, setError] = useState<string | null>(null);
-    const [data, setData] = useState({ email: 'aurore@domain.com', password: '12345678' });
+    const router = useRouter()
+    const [error, setError] = useState<string | null | any>(null);
+    const [data, setData] = useState({ email: 'aurooore@domain.com', password: '12345678' });
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         setData(prevData => ({ ...prevData, [name]: value }));
@@ -12,19 +14,24 @@ export default function ClientCredentialsSignIn() {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        setError(null);
 
         try {
             const result = await signIn("credentials", {
                 email: data.email,
                 password: data.password,
-                redirectTo: "/dashboard"
+                redirect: false,
+                //redirectTo: "/dashboard"
             });
             if (result?.error) {
-                setError(result.error); // Display error message if authentication fails
-            } else {
-                setError(null); // Clear any previous errors on successful login
-                //router.push('/dashboard'); // Redirect to dashboard after successful login
+                if (result.error === "Configuration")
+                    setError("Invalid credentials");
+                else
+                    setError(result.error);
+                return
             }
+            router.push("/dashboard")
+            router.refresh()
         } catch (error) {
             console.error("An unexpected error occurred:", error);
             setError('An unexpected error occurred');
@@ -33,7 +40,11 @@ export default function ClientCredentialsSignIn() {
 
     return (
         <div className="mx-auto">
-            {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
+            {error && (
+                <div className="p-3 text-sm text-red-500 bg-red-50 rounded-lg border border-red-200">
+                    {error}
+                </div>
+            )}
             <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">

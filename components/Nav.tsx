@@ -6,7 +6,7 @@ export default async function Nav() {
     const session = await auth()
 
     return (
-        <nav className="font-[family-name:var(--font-geist-sans)] p-8 sm:p-20 pb-0">
+        <nav className="font-[family-name:var(--font-geist-sans)] p-4 pb-0">
             <div className="flex items-center justify-between">
                 <Link
                     href="/"
