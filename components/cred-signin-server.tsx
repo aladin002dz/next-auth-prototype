@@ -1,10 +1,8 @@
 import { signIn } from "@/auth"
-//import { CallbackRouteError } from "next-auth/providers/credentials"
 import { CallbackRouteError } from "@auth/core/errors"
 import { redirect } from "next/navigation"
-//import { useSearchParams } from "next/navigation"
 
-export function CredentialsSignIn({ error }: { searchParams: Map<string, string> }) {
+export default function ServerCredentialsSignIn() {
     async function handleSignIn(formData: FormData) {
         "use server"
         try {
@@ -31,11 +29,6 @@ export function CredentialsSignIn({ error }: { searchParams: Map<string, string>
             action={handleSignIn}
             className="w-full space-y-4"
         >
-            {error && error?.source === "server_credentials" && error?.error && (
-                <div className="p-3 text-sm text-red-500 bg-red-50 rounded-lg border border-red-200">
-                    {error?.error}
-                </div>
-            )}
             <div className="space-y-2">
                 <label className="block text-sm font-medium text-gray-700">
                     Email

@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation"
 
 export default function ClientCredentialsSignIn() {
     const router = useRouter()
-    const [error, setError] = useState<string | null | any>(null);
+    const [error, setError] = useState<string | null>(null);
     const [data, setData] = useState({ email: 'aurooore@domain.com', password: '12345678' });
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
