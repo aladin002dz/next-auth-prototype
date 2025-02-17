@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation"
 export default function ClientCredentialsSignIn() {
     const router = useRouter()
     const [error, setError] = useState<string | null>(null);
+    const [loading, setLoading] = useState<boolean>(false);
     const [data, setData] = useState({ email: 'aurooore@domain.com', password: '12345678' });
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -15,7 +16,7 @@ export default function ClientCredentialsSignIn() {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setError(null);
-
+        setLoading(true);
         try {
             const result = await signIn("credentials", {
                 email: data.email,
@@ -28,14 +29,17 @@ export default function ClientCredentialsSignIn() {
                     setError("Invalid credentials");
                 else
                     setError(result.error);
+            }
+            else {
+                router.push("/dashboard")
+                router.refresh()
                 return
             }
-            router.push("/dashboard")
-            router.refresh()
         } catch (error) {
             console.error("An unexpected error occurred:", error);
             setError('An unexpected error occurred');
         }
+        setLoading(false);
     };
 
     return (
@@ -73,10 +77,11 @@ export default function ClientCredentialsSignIn() {
                     />
                 </div>
                 <button
+                    disabled={loading}
                     type="submit"
-                    className="w-full flex justify-center items-center gap-2 rounded-lg bg-white px-6 py-2 text-sm font-medium text-gray-800 shadow-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-300 border border-gray-300"
+                    className="w-full rounded-lg bg-gray-800 px-6 py-2 text-sm font-medium text-white shadow-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-300"
                 >
-                    Sign in with Email
+                    {loading ? "Loading..." : "Sign in with Email"}
                 </button>
             </form>
         </div>
