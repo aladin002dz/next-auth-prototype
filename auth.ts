@@ -17,6 +17,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                 const email = credentials?.email
                 let user = null
 
+                //warning: password must be "hashed" in real projects,this is only for demo purposes 
                 if (email === "aurore@domain.com" && password === "12345678") {
                     user = {
                         id: "1",

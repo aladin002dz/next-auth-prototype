@@ -7,7 +7,7 @@ export default function ClientCredentialsSignIn() {
     const router = useRouter()
     const [error, setError] = useState<string | null>(null);
     const [loading, setLoading] = useState<boolean>(false);
-    const [data, setData] = useState({ email: 'aurooore@domain.com', password: '12345678' });
+    const [data, setData] = useState({ email: 'aurore@domain.com', password: '12345678' });
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         setData(prevData => ({ ...prevData, [name]: value }));
